@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import "../App.css";
 
@@ -59,6 +60,78 @@ import "../App.css";
 // }
 // `;
 const SignUp = () => {
+  //local state
+  const [inputValue, setInputValue] = useState({
+    name: "",
+    loginId: "",
+    password: "",
+    phoneNum: "",
+    email: "",
+  });
+  function onChangeName(e) {
+    setInputValue({
+      ...inputValue,
+      [e.target.name]: e.target.value,
+    });
+    // 이름은 3글자만
+    if (inputValue.name.length !== 3) {
+      console.log("3글자 아님");
+    } else {
+      console.log("3글자");
+    }
+  }
+  function onChangeId(e) {
+    setInputValue({
+      ...inputValue,
+      [e.target.name]: e.target.value,
+    });
+    // id 8글자 이상
+    if (inputValue.loginId.length < 8) {
+      console.log("8글자 아래");
+    } else {
+      console.log("8글자 이상");
+    }
+  }
+  function onChangePW(e) {
+    setInputValue({
+      ...inputValue,
+      [e.target.name]: e.target.value,
+    });
+    // Password 8글자 이상, 대문자 포함
+    const regexPW = /[A-Z]+/;
+    if (inputValue.password.length > 8 && regexPW.test(inputValue.password)) {
+      console.log("8글자 이상 and 대문자 포함");
+    } else {
+      console.log("8글자 아래 or 대문자 미포함");
+    }
+  }
+  function onChangePN(e) {
+    setInputValue({
+      ...inputValue,
+      [e.target.name]: e.target.value,
+    });
+    const regexPN = /^\d{3}-\d{3,4}-\d{3,4}$/;
+    // id 8글자 이상
+    if (regexPN.test(inputValue.phoneNum)) {
+      console.log("가능");
+    } else {
+      console.log("불가능");
+    }
+  }
+  function onChangeEmail(e) {
+    setInputValue({
+      ...inputValue,
+      [e.target.name]: e.target.value,
+    });
+    const regexEmail =
+      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    // email
+    if (regexEmail.test(inputValue.email)) {
+      console.log("가능");
+    } else {
+      console.log("불가능");
+    }
+  }
   return (
     <>
       <div className="sign-up-wrapper">
@@ -77,14 +150,18 @@ const SignUp = () => {
                 <input
                   className="sign-up-input sign-up-input-pw"
                   placeholder="NAME"
-                  name="password"
+                  name="name"
+                  value={inputValue.name}
+                  onChange={onChangeName}
                 />
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-id"
                   placeholder="ID"
-                  name="sign-upId"
+                  name="loginId"
+                  value={inputValue.loginId}
+                  onChange={onChangeId}
                 />
               </div>
               <div>
@@ -92,20 +169,26 @@ const SignUp = () => {
                   className="sign-up-input sign-up-input-pw"
                   placeholder="PASSWORD"
                   name="password"
+                  value={inputValue.password}
+                  onChange={onChangePW}
                 />
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-pw"
-                  placeholder="PHONENUMBER"
-                  name="password"
+                  placeholder="PHONENUMBER            ex)000-0000-0000"
+                  name="phoneNum"
+                  value={inputValue.phoneNum}
+                  onChange={onChangePN}
                 />
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-pw"
                   placeholder="EMAIL"
-                  name="password"
+                  name="email"
+                  value={inputValue.email}
+                  onChange={onChangeEmail}
                 />
               </div>
               <div></div>
