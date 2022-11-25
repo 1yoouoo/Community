@@ -93,3 +93,22 @@ html {
   font-weight: bold;
   color: #1b2866cd;
 }
+/* fontawesome */
+.faCheck {
+  opacity: 0;
+  position: absolute;
+  transform: translate(-15px, 10px);
+  color: rgb(26, 157, 26);
+}
+.valid {
+  opacity: 1;
+}
+.faCircleXmark {
+  opacity: 0;
+  position: absolute;
+  transform: translate(-15px, 10px);
+  color: rgb(210, 3, 3);
+}
+.invalid {
+  opacity: 1;
+}

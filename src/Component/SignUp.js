@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import "../App.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 // const SignUpStyle = styled.div`
 // .sign-up-wrapper {
@@ -60,7 +62,11 @@ import "../App.css";
 // }
 // `;
 const SignUp = () => {
+  const [isValid, setIsValid] = useState(true);
+  const [touched, setTouched] = useState(false);
+
   //local state
+
   const [inputValue, setInputValue] = useState({
     name: "",
     loginId: "",
@@ -68,6 +74,8 @@ const SignUp = () => {
     phoneNum: "",
     email: "",
   });
+
+  //function
   function onChangeName(e) {
     setInputValue({
       ...inputValue,
@@ -76,8 +84,10 @@ const SignUp = () => {
     // 이름은 3글자만
     if (inputValue.name.length !== 3) {
       console.log("3글자 아님");
+      setIsValid(false);
     } else {
       console.log("3글자");
+      setIsValid(true);
     }
   }
   function onChangeId(e) {
@@ -88,8 +98,10 @@ const SignUp = () => {
     // id 8글자 이상
     if (inputValue.loginId.length < 8) {
       console.log("8글자 아래");
+      setIsValid(false);
     } else {
       console.log("8글자 이상");
+      setIsValid(true);
     }
   }
   function onChangePW(e) {
@@ -125,6 +137,7 @@ const SignUp = () => {
     });
     const regexEmail =
       /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    setIsValid(false);
     // email
     if (regexEmail.test(inputValue.email)) {
       console.log("가능");
@@ -139,8 +152,8 @@ const SignUp = () => {
           <div className="sign-up-holder-container">
             <div className="sign-up-holder-icon">icon</div>
             <div className="sign-up-holder">
-              <div className="sign-up-holder-title">Let's get started !</div>
-              <div className="sign-up-holder-subtitle">Sign Up now,</div>
+              <div className="sign-up-holder-title">Sign up now,</div>
+              <div className="sign-up-holder-subtitle">Let's get started !</div>
             </div>
           </div>
           <div className="sign-up-form">
@@ -153,6 +166,27 @@ const SignUp = () => {
                   name="name"
                   value={inputValue.name}
                   onChange={onChangeName}
+                  onBlur={() => setTouched(true)}
+                />
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  className={
+                    touched
+                      ? isValid
+                        ? "faCheck valid"
+                        : "faCheck"
+                      : "faCheck"
+                  }
+                />
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className={
+                    touched
+                      ? isValid
+                        ? "faCircleXmark"
+                        : "faCircleXmark invalid"
+                      : "faCircleXmark"
+                  }
                 />
               </div>
               <div>
@@ -163,23 +197,40 @@ const SignUp = () => {
                   value={inputValue.loginId}
                   onChange={onChangeId}
                 />
-              </div>
-              <div>
-                <input
-                  className="sign-up-input sign-up-input-pw"
-                  placeholder="PASSWORD"
-                  name="password"
-                  value={inputValue.password}
-                  onChange={onChangePW}
+                <FontAwesomeIcon icon={faCheck} className="faCheck" />
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="faCircleXmark"
                 />
               </div>
               <div>
                 <input
                   className="sign-up-input sign-up-input-pw"
-                  placeholder="PHONENUMBER            ex)000-0000-0000"
+                  placeholder="PASSWORD"
+                  type="password"
+                  name="password"
+                  value={inputValue.password}
+                  onChange={onChangePW}
+                />
+                <FontAwesomeIcon icon={faCheck} className="faCheck" />
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="faCircleXmark"
+                />
+              </div>
+              <div>
+                <input
+                  className="sign-up-input sign-up-input-pw"
+                  placeholder="PHONENUMBER        ex)000-0000-0000"
                   name="phoneNum"
+                  type="number"
                   value={inputValue.phoneNum}
                   onChange={onChangePN}
+                />
+                <FontAwesomeIcon icon={faCheck} className="faCheck" />
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="faCircleXmark"
                 />
               </div>
               <div>
@@ -187,11 +238,16 @@ const SignUp = () => {
                   className="sign-up-input sign-up-input-pw"
                   placeholder="EMAIL"
                   name="email"
+                  type="email"
                   value={inputValue.email}
                   onChange={onChangeEmail}
                 />
+                <FontAwesomeIcon icon={faCheck} className="faCheck" />
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="faCircleXmark"
+                />
               </div>
-              <div></div>
             </div>
             <div className="sign-up-form-other">
               <div className="sign-up">
